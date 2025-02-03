@@ -10,6 +10,6 @@ class School extends Model
 
     public function sections()
     {
-        return $this->hasMany(Section::class, 'id_school');
+        return $this->hasMany(Section::class, 'id_school')->onDelete('cascade')->onUpdate('cascade');
     }
 }

@@ -12,7 +12,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
+        $sections=Section::all();
+        return view('admin.section.index',compact('sections'));
     }
 
     /**
@@ -20,7 +21,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.section.create');
     }
 
     /**
@@ -28,7 +29,13 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre'=>'required',
+        ]);
+        $section=new Section();
+        $section->nombre=$request->nombre;
+        $section->save();
+        return redirect()->route('section.index')->with('mensaje','Seccion creada con exito')->with('icono','success');
     }
 
     /**

@@ -2,8 +2,8 @@
 
 {{-- Customize layout sections --}}
 
-@section('subtitle', 'Welcome')
-@section('content_header_title', 'Escuela')
+@section('subtitle', 'Secciones')
+@section('content_header_title', 'Seccion')
 @section('content_header_subtitle', 'Dashboard')
 
 {{-- Add custom page content --}}
@@ -15,9 +15,9 @@
         <div class="col-md-12">
             <div class="card card-outline card-success mt-5">
                 <div class="card-header">
-                    <h3 class="card-title">Solo puede existir una configuracion</h3>
+                    <h3 class="card-title">Seccion</h3>
                     <div class="card-tools">
-                        <a href="{{route('school.create')}}" class="float-end btn btn-success"><i class="fa-solid fa-plus"></i>  Crear</a>
+                        <a href="{{route('section.create')}}" class="float-end btn btn-success"><i class="fa-solid fa-plus"></i>  Crear</a>
                         {{--<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>--}}
 
                     </div>
@@ -27,34 +27,24 @@
                         <thead>
                         <tr>
                             <th style="text-align: center" class="col-2">Nombre</th>
-                            <th style="text-align: center" class="col-2">Dirección</th>
-                            <th style="text-align: center" class="col-2">Email</th>
-                            <th style="text-align: center" class="col-2">Teléfono</th>
-                            <th style="text-align: center" class="col-2">Logotipo</th>
                             <th style="text-align: center" class="col-1">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($schools as $school)
+                        @foreach($sections as $section)
                             <tr>
-                                <td class="text-center">{{$school->nombre}}</td>
-                                <td class="text-center">{{$school->direccion}}</td>
-                                <td class="text-center">{{$school->email}}</td>
-                                <td class="text-center">{{$school->telefono}}</td>
-                                <td class="text-center">
-                                    <img src="{{asset('storage/'.$school->logo)}}" alt="logo" width="100px" height="100px">
-                                </td>
-                                <td style="text-align: center">
+                                <td class="text-center">{{$section->nombre}}</td>
+
                                     <div class="btn-group"  role="group" aria-level="Basic example">
-                                        <a href="{{route('school.edit',$school->id)}}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a>
-                                        <form action="{{url('/admin/school',$school->id)}}" method="POST"
-                                              onclick="ask{{$school->id}}(event)" id="miFormulario{{$school->id}}">
+                                        <a href="{{route('section.edit',$section->id)}}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a>
+                                        <form action="{{url('/admin/section',$section->id)}}" method="POST"
+                                              onclick="ask{{$section->id}}(event)" id="miFormulario{{$section->id}}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 0px 4px 4px 0px"><i class="fas fa-trash"></i></button>
                                         </form>
                                         <script>
-                                            function ask{{$school->id}}(event){
+                                            function ask{{$section->id}}(event){
                                                 event.preventDefault();
                                                 Swal.fire({
                                                     title: 'Desea eliminar la Escuela?',
@@ -67,7 +57,7 @@
                                                     cancelButtonColor: '#270a0a',
                                                 }).then((result) => {
                                                     if (result.isConfirmed) {
-                                                        var form=$('#miFormulario{{$school->id}}');
+                                                        var form=$('#miFormulario{{$section->id}}');
                                                         form.submit();
                                                     }
                                                 });

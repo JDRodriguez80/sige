@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SchoolController extends Controller
 {
@@ -21,7 +22,7 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.school.create');
     }
 
     /**
@@ -29,7 +30,22 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'email' => 'required',
+            'logo' => 'required',
+        ]);
+
+        $school = new School();
+        $school->nombre=$request->nombre;
+        $school->direccion=$request->direccion;
+        $school->telefono=$request->telefono;
+        $school->email=$request->email;
+        $school->logo=$request->file('logo')->store('logos','public');
+        $school->save();
+        return redirect('/admin/school')->with('mensaje', 'el estudiante fue agregado')->with('icono', 'success');
     }
 
     /**
@@ -43,24 +59,46 @@ class SchoolController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(School $school)
+    public function edit($id)
     {
-        //
+        $school=School::find($id);
+
+        return view('admin.school.edit', compact('school'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, School $school)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'email' => 'required',
+            'logo' => 'required',
+        ]);
+
+        $school =School::find($id);
+        $school->nombre=$request->nombre;
+        $school->direccion=$request->direccion;
+        $school->telefono=$request->telefono;
+        $school->email=$request->email;
+        unlink(public_path('storage/'.$school->logo));
+        $school->logo=$request->file('logo')->store('logos','public');
+        $school->save();
+        return redirect()->route('school.index')->with('mensaje', 'La escuela fue actualizada')->with('icono', 'success');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(School $school)
+    public function destroy($id)
     {
-        //
+        $school = School::find($id);
+        unlink(public_path('storage/'.$school->logo));
+        School::destroy($id);
+        return redirect()->route('school.index')->with('mensaje', 'La escuela fue eliminada')->with('icono', 'warning');
     }
 }

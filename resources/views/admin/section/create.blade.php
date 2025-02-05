@@ -27,15 +27,27 @@
                         @csrf
                         <div class="row mb-4">
                             <div class="col-md-12">
-                                /*todo
-                                    add a school id so section can relate to it maybe hidden
-                                */
 
                                 <label for="section name" class="form-label">Nombre: * </label>
                                 <input type="text" class="form-control" id="name" name="nombre" placeholder="Nombre de la seccion"required>
                                 @error('nombre')
                                 <small class="text-danger">{{$message}}</small>
                                 @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label>Escuela</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-book"></i></span>
+                                    </div>
+                                    <select class="form-control" aria-label="Default select example" name="school_id">
+                                        @foreach($schools as $school)
+                                            <option value="{{$school->id}}">{{$school->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar</button>

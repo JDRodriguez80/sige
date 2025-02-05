@@ -21,3 +21,4 @@ Route::delete('/admin/school/{id}', [App\Http\Controllers\SchoolController::clas
 Route::get('/admin/section', [App\Http\Controllers\SectionController::class, 'index'])->name('section.index')->middleware('auth');
 Route::get('/admin/section/create', [App\Http\Controllers\SectionController::class, 'create'])->name('section.create')->middleware('auth');
 Route::post('/admin/section/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store')->middleware('auth');
+Route::get('/admin/section/edit/{id}', [App\Http\Controllers\SectionController::class, 'edit'])->name('section.edit')->middleware('auth');

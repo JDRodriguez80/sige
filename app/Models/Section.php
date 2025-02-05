@@ -10,7 +10,7 @@ class Section extends Model
 
     public function school()
     {
-        return $this->belongsTo(School::class, 'id_school')->onDelete('cascade')->onUpdate('cascade');
+        return $this->belongsTo(School::class, 'id_school');
     }
     public function groups()
     {

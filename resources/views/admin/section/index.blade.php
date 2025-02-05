@@ -12,7 +12,7 @@
 
 @section('content_body')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9 offset-1">
             <div class="card card-outline card-success mt-5">
                 <div class="card-header">
                     <h3 class="card-title">Seccion</h3>
@@ -31,10 +31,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($sections as $section)
-                            <tr>
+                            <tr class="col-md-3">
+                                @foreach($sections as $section)
                                 <td class="text-center">{{$section->nombre}}</td>
-
+                                <td class="text-center">
                                     <div class="btn-group"  role="group" aria-level="Basic example">
                                         <a href="{{route('section.edit',$section->id)}}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a>
                                         <form action="{{url('/admin/section',$section->id)}}" method="POST"
